@@ -6,6 +6,7 @@ const pageStartContainerEl = document.getElementById('page-start-container');
 const questionContainerEl = document.getElementById('question-container');
 const endContainerEl = document.getElementById('end-container');
 const highScoreContainerEl = document.getElementById('high-score-container');
+const questionEl = document.getElementById('question')
 var currentQuestion = 0;
 var questions = [
     {
@@ -29,6 +30,7 @@ var questions = [
         answer: 'stringify()'
     }
 ]
+var highScores = [];
 //Add event listener that triggers the time, and renders the questions page while also hiding the page-start-container
 
 var startGame = function() {
@@ -55,4 +57,12 @@ var setTime = function() {
     },1000)
 }
 
-startButtonEl.addEventListener('click',startGame)
+var renderQuestions = function() {
+for(var i= 0; i < questions.length; i++) {
+    var questionDisplay = document.createElement('h1');
+    questionDisplay.textContent = questions[i].question
+    questionEl.appendChild(questionDisplay);
+    renderQuestions();
+}
+}
+startButtonEl.addEventListener('click',startGame);
