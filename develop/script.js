@@ -60,6 +60,7 @@ const questions = [
 //Gives the selection in the array a starting point of zero or the first question.
 let questionIndex = 0;
 var totalTime = 20;
+var highScores = [];
 
 //Start quiz function
 function startQuiz() {
@@ -76,9 +77,10 @@ function startQuiz() {
         timerEl.textContent = totalTime;
         totalTime--;
         if (totalTime < 0 || questionIndex >= questions.length) {
-            GameOver(); 
             clearInterval(startTimer);
-            }
+            GameOver();
+
+        }
     }, 1000);
     // renders the initial questions and answers
     renderQuestions();
@@ -89,24 +91,24 @@ function renderQuestions() {
 
     questionEl.textContent = questions[questionIndex].question;
 
-        choiceA.textContent = questions[questionIndex].choices[0]
-        choiceB.textContent = questions[questionIndex].choices[1]
-        choiceC.textContent = questions[questionIndex].choices[2]
-        choiceD.textContent = questions[questionIndex].choices[3]
+    choiceA.textContent = questions[questionIndex].choices[0]
+    choiceB.textContent = questions[questionIndex].choices[1]
+    choiceC.textContent = questions[questionIndex].choices[2]
+    choiceD.textContent = questions[questionIndex].choices[3]
 };
 
-var answerCheck  = function(event) {
+var answerCheck = function (event) {
     var selectedAnswer = event.target
-    if(questions[questionIndex].answer !== selectedAnswer.innerText) {
+    if (questions[questionIndex].answer !== selectedAnswer.innerText) {
         totalTime = totalTime - 5;
     }
 
     questionIndex++;
-    if(questionIndex < questions.length) {
+    if (questionIndex < questions.length) {
         renderQuestions();
     } else {
         GameOver();
-    }  
+    }
 }
 
 
@@ -116,9 +118,9 @@ function GameOver() {
     endGameContainer.classList.remove('hide');
     endGameContainer.classList.add('show');
 
-    endGameDisplayScore.textContent = totalTime;
+    endGameDisplayScore.textContent = timerEl.textContent;
 }
- // displays highScore page and hides intro container
+// displays highScore page and hides intro container
 function highScore() {
     introContainer.classList.remove('show');
     introContainer.classList.add('hide');
@@ -126,7 +128,57 @@ function highScore() {
     highScoreContainerEl.classList.add('show');
 }
 
-// start game button / event listeners
+function goBack() {
+    highScoreContainerEl.classList.remove('show');
+    highScoreContainerEl.classList.add('hide');
+    introContainer.classList.remove('hide');
+    introContainer.classList.add('show');
+
+}
+
+function SubmitToHome() {
+    endGameContainer.classList.remove('show');
+    endGameContainer.classList.add('hide');
+    introContainer.classList.remove('hide');
+    introContainer.classList.add('show');
+}
+
+function renderHighScoreList(event) {
+    event.preventDefault();
+    var initials = localStorage.getItem('initials');
+    var score = localStorage.getItem('score');
+    if (!initials || !score) {
+        return;
+    }
+    var li = document.createElement('li');
+    li.textContent = initials, score;
+    highScoreList.append(li)
+}
+
+//event listeners
+
+//start game button
 StartGameButton.addEventListener('click', startQuiz);
-questionContainerEl.addEventListener('click',answerCheck)
-viewHighScoreEl.addEventListener('click', highScore)
+// check if answers are clicked and correct
+questionContainerEl.addEventListener('click', answerCheck);
+// view high score button
+viewHighScoreEl.addEventListener('click', highScore);
+// go back button in high score page
+highScoreGoBackButton.addEventListener('click', goBack);
+// add event listener to submit button that stores the users initials and there score.
+submitInitialsButton.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    var initials = document.getElementById('initials').value;
+    var score = totalTime;
+
+    if (initials === '') {
+        alert('error,You must enter initials');
+    } else {
+        alert('Success, your score has been saved!');
+
+        localStorage.setItem('initials', initials)
+        localStorage.setItem('score', score);
+        SubmitToHome();
+    }
+})
