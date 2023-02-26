@@ -73,16 +73,7 @@ function startQuiz() {
     introContainer.classList.add('hide');
     questionContainerEl.classList.remove('hide');
     questionContainerEl.classList.add('show');
-    //function to start the time and decrement by 1.
-    var startTimer = setInterval(function () {
-        timerEl.textContent = totalTime;
-        totalTime--;
-        if (totalTime < 0 || questionIndex >= questions.length) {
-            clearInterval(startTimer);
-            GameOver();
-
-        }
-    }, 1000);
+    startTimer();
     // renders the initial questions and answers
     renderQuestions();
 }
@@ -97,6 +88,18 @@ function renderQuestions() {
     choiceC.textContent = questions[questionIndex].choices[2]
     choiceD.textContent = questions[questionIndex].choices[3]
 };
+
+var startTimer = function () {
+        totalTime = 30;
+    var timeStart = setInterval(function () {
+        timerEl.innerText = totalTime;
+        totalTime--;
+        if (totalTime < 0 || questionIndex >= questions.length) {
+            clearInterval(timeStart);
+            GameOver();
+        }
+    }, 1000);
+}
 
 var answerCheck = function (event) {
     var selectedAnswer = event.target
@@ -155,6 +158,7 @@ function renderHighScoreList(event) {
     var li = document.createElement('li');
     li.textContent = initials, score;
     highScoreList.append(li)
+
 }
 
 
@@ -170,6 +174,7 @@ var clearScores = function () {
 
     localStorage.clear(highScore)
 }
+
 //event listeners
 
 //start game button
@@ -202,6 +207,7 @@ submitInitialsButton.addEventListener('click', function (event) {
     highScores.push(highScore);
     highScores.sort((a, b) => { return b.score - a.score });
 
+    highScoreList.innerHTML = "";
     for (var i = 0; i < highScores.length; i++) {
         var highScoresEl = document.createElement('li');
         highScoresEl.innerHTML = highScores[i].initials + ' - ' + highScores[i].score;
