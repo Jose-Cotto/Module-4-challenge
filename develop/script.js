@@ -33,6 +33,7 @@ const highScoreContainerEl = document.getElementById('high-score-container');
 const highScoreList = document.getElementById('high-score-list');
 const highScoreGoBackButton = document.getElementById('go-back');
 const clearHighScoresButton = document.getElementById('clear-high-scores');
+const initialsForm = document.getElementById('initials-form')
 
 // Array of all questions that will be rendered
 const questions = [
@@ -126,6 +127,7 @@ function highScore() {
     introContainer.classList.add('hide');
     highScoreContainerEl.classList.remove('hide');
     highScoreContainerEl.classList.add('show');
+    renderHighScoreList();
 }
 
 function goBack() {
@@ -139,14 +141,15 @@ function goBack() {
 function SubmitToHome() {
     endGameContainer.classList.remove('show');
     endGameContainer.classList.add('hide');
-    introContainer.classList.remove('hide');
-    introContainer.classList.add('show');
+    highScoreContainerEl.classList.remove('hide');
+    highScoreContainerEl.classList.add('show');
+    timerEl.textContent = 0;
 }
 
 function renderHighScoreList(event) {
     event.preventDefault();
-    var initials = localStorage.getItem('initials');
-    var score = localStorage.getItem('score');
+    var initials = localStorage.getItem(initials)
+    var score = localStorage.getItem(score)
     if (!initials || !score) {
         return;
     }
@@ -155,6 +158,10 @@ function renderHighScoreList(event) {
     highScoreList.append(li)
 }
 
+
+function clearHighScores() {
+    highScoreList.remove('li')
+}
 //event listeners
 
 //start game button
@@ -174,11 +181,25 @@ submitInitialsButton.addEventListener('click', function (event) {
 
     if (initials === '') {
         alert('error,You must enter initials');
-    } else {
-        alert('Success, your score has been saved!');
+        return;
+    }
 
-        localStorage.setItem('initials', initials)
-        localStorage.setItem('score', score);
-        SubmitToHome();
+    var highScore = {
+        initials: initials,
+        score: score
+    }
+    localStorage.setItem('initials', initials)
+    localStorage.setItem('score', score);
+    SubmitToHome();
+    highScores.push(highScore);
+    highScores.sort((a, b) => { return b.score - a.score });
+
+    for (var i = 0; i < highScores.length; i++) {
+        var highScoresEl = document.createElement('li');
+        highScoresEl.innerHTML = highScores[i].initials + ' - ' + highScores[i].score;
+        highScoreList.append(highScoresEl);
+        
+        initialsForm.reset();
     }
 })
+

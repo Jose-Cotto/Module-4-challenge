@@ -30,3 +30,7 @@ header{
 .hide {
     display:none;
 }
+
+li {
+    list-style:none;
+}
