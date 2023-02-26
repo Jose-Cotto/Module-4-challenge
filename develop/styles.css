@@ -41,8 +41,9 @@ header {
 
 .content{
     margin:auto;
+    border:2px solid black;
 }
-.content h1 {
+ h1 {
     font-size:32px;
     padding:20px;
     color:var(--button-color);
@@ -62,6 +63,21 @@ header {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-#question {
+.questions {
+    display:flex;
+    flex:1;
+    margin-bottom:50px;
     text-align:center;
 }
+
+.btn {
+    display:flex;
+    margin:5px auto;
+    border:none;
+    padding:10px;
+    border-radius:5px;
+    background-color:var(--button-color);
+    color: var(--background-color);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+

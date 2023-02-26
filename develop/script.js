@@ -7,7 +7,11 @@ const questionContainerEl = document.getElementById('question-container');
 const endContainerEl = document.getElementById('end-container');
 const highScoreContainerEl = document.getElementById('high-score-container');
 const questionEl = document.getElementById('question')
+var answerButtonsEl = document.getElementById('answer-buttons')
+
+var questionIndex = 0;
 var currentQuestion = 0;
+var highScores = [];
 var questions = [
     {
         question:'Which of the following keywords is used to define a variable in Javascript?',
@@ -30,39 +34,66 @@ var questions = [
         answer: 'stringify()'
     }
 ]
-var highScores = [];
-//Add event listener that triggers the time, and renders the questions page while also hiding the page-start-container
+
 
 var startGame = function() {
+    questionIndex = 0;
+    timeLeft = 10;
     pageStartContainerEl.classList.add('hide')
     pageStartContainerEl.classList.remove('show');
     questionContainerEl.classList.add('Show');
     questionContainerEl.classList.remove('hide');
-    setTime();
-}
 
-
-var setTime = function() {
-    timeLeft = 40;
-
-    var timerDisplay = setInterval(function() {
-        timerEl.textContent = timeLeft;
+    var startTimer = setInterval(function() {
         timeLeft --;
-
-        if(timeLeft <= 0 || currentQuestion >= questions.length) {
-            clearInterval(setTime)
+        timerEl.textContent = timeLeft;
+       
+        if(timeLeft <= 0 || questionIndex < questions.length - 1) { // may need to add a minus one to use the last question
+            clearInterval(startTimer)
             timerEl.textContent= 0;
+            ;
         }
 
-    },1000)
-}
-
-var renderQuestions = function() {
-for(var i= 0; i < questions.length; i++) {
-    var questionDisplay = document.createElement('h1');
-    questionDisplay.textContent = questions[i].question
-    questionEl.appendChild(questionDisplay);
+    },1000);
     renderQuestions();
 }
+
+console.log(questions[questionIndex].question)
+console.log(questions[questionIndex].choices)
+console.log(questions[questionIndex].answer)
+
+   
+
+
+var renderQuestions = function() {
+    //sets the question elements text content to display the questions array at the index of zero and only the questions
+    questionEl.textContent = questions[questionIndex].question;
+    //creates buttons for the 4 choices available
+    var choice1 = document.createElement('button')
+    var choice2 = document.createElement('button')
+    var choice3 = document.createElement('button')
+    var choice4 = document.createElement('button')
+    //changes the text inside the buttons to match that of the choices indexed
+    choice1.innerHTML = questions[questionIndex].choices[0];
+    choice2.innerHTML = questions[questionIndex].choices[1];
+    choice3.innerHTML = questions[questionIndex].choices[2];
+    choice4.innerHTML = questions[questionIndex].choices[3];
+    //add the choices to HTML in order to be displayed
+    answerButtonsEl.appendChild(choice1)
+    answerButtonsEl.appendChild(choice2)
+    answerButtonsEl.appendChild(choice3)
+    answerButtonsEl.appendChild(choice4)
+    // add classes to the buttons for styling
+    choice1.classList.add('btn')
+    choice2.classList.add('btn')
+    choice3.classList.add('btn')
+    choice4.classList.add('btn')
 }
+
+
+
+
+
 startButtonEl.addEventListener('click',startGame);
+
+console.log(questions[questionIndex].choices[1]);
