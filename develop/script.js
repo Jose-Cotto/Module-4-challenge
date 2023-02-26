@@ -9,7 +9,7 @@
 // THEN the game is over
 // WHEN the game is over
 // THEN I can save my initials and my score
-/* All needed variables*/ 
+/* All needed variables*/
 
 const viewHighScoreEl = document.getElementById('view-high-score');
 //Need to add text content to display time and have time decrease by 1 per second
@@ -34,23 +34,55 @@ const clearHighScoresButton = document.getElementById('clear-high-scores');
 // Array of all questions that will be rendered
 const questions = [
     {
-        question:'When was JavaScript created?',
+        question: 'When was JavaScript created?',
         choices: ['A. 2001', 'B. 2009', 'C. It was always present', 'D. 1995'],
         answer: 'D. 1995'
     },
     {
-        question:'Inside of which HTML element do we put the JavaScript link?',
+        question: 'Inside of which HTML element do we put the JavaScript link?',
         choices: ['A. <js>', 'B. <javascript>', 'C. <scripting>', 'D. <script>'],
         answer: 'D. <script>'
     },
     {
-        question:'Arrays in JavaScript can be used to store ______',
+        question: 'Arrays in JavaScript can be used to store ______',
         choices: ['A. strings', 'B. objects', 'C. arrays', 'D. All of the above'],
         answer: 'D. All of the above'
     },
     {
-        question:'Commonly used data types do not include?',
+        question: 'Commonly used data types do not include?',
         choices: ['A. strings', 'B. booleans', 'C. alerts', 'D. numbers'],
         answer: 'C. numbers'
     }
 ]
+//Gives the selection in the array a starting point of zero or the first question.
+let questionIndex = 0;
+
+
+//Start quiz function
+function startQuiz() {
+    //sets the index to zero again, creates a variable for the starting time and changes the text content to that said time
+    var totalTime = 5;
+    questionIndex = 0;
+    timerEl.textContent = totalTime;
+    // hides the IntroContainer and shows the questions container
+    introContainer.classList.remove('show');
+    introContainer.classList.add('hide');
+    questionContainerEl.classList.remove('hide');
+    questionContainerEl.classList.add('show');
+    //function to start the time and decrement by 1.
+    var startTimer = setInterval(function () {
+        timerEl.textContent = totalTime;
+        totalTime--;
+        if (totalTime < 0) {
+            clearInterval(startTimer);
+            if (questionIndex <= questions.length - 1) {
+                console.log('this works') // will have to add the actual functionality 
+            }
+        }
+    }, 1000);
+}
+
+
+
+// start game button
+StartGameButton.addEventListener('click', startQuiz)
