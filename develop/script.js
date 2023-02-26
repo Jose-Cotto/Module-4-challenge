@@ -1,3 +1,4 @@
+'use strict';
 // GIVEN I am taking a code quiz
 // WHEN I click the start button
 // THEN a timer starts and I am presented with a question
@@ -18,10 +19,12 @@ const introContainer = document.getElementById('intro-container');
 const StartGameButton = document.getElementById('start-quiz');
 const questionContainerEl = document.getElementById('question-container');
 const questionEl = document.getElementById('question');
-const answerA = document.getElementById('A');
-const answerB = document.getElementById('B');
-const answerC = document.getElementById('C');
-const answerD = document.getElementById('D');
+const choiceA = document.getElementById('A');
+const choiceB = document.getElementById('B');
+const choiceC = document.getElementById('C');
+const choiceD = document.getElementById('D');
+// Grabs all of the answer buttons to make an event listener easier
+const allAnswerButtons = document.querySelectorAll('.answer-btn')
 const endGameContainer = document.getElementById('end-game-container');
 const endGameDisplayScore = document.getElementById('display-score');
 const initialsInput = document.getElementById('initials');
@@ -51,17 +54,16 @@ const questions = [
     {
         question: 'Commonly used data types do not include?',
         choices: ['A. strings', 'B. booleans', 'C. alerts', 'D. numbers'],
-        answer: 'C. numbers'
+        answer: 'C. alerts'
     }
 ]
 //Gives the selection in the array a starting point of zero or the first question.
 let questionIndex = 0;
-
+var totalTime = 20;
 
 //Start quiz function
 function startQuiz() {
     //sets the index to zero again, creates a variable for the starting time and changes the text content to that said time
-    var totalTime = 5;
     questionIndex = 0;
     timerEl.textContent = totalTime;
     // hides the IntroContainer and shows the questions container
@@ -73,16 +75,58 @@ function startQuiz() {
     var startTimer = setInterval(function () {
         timerEl.textContent = totalTime;
         totalTime--;
-        if (totalTime < 0) {
+        if (totalTime < 0 || questionIndex >= questions.length) {
+            GameOver(); 
             clearInterval(startTimer);
-            if (questionIndex <= questions.length - 1) {
-                console.log('this works') // will have to add the actual functionality 
             }
-        }
     }, 1000);
+    // renders the initial questions and answers
+    renderQuestions();
+}
+
+//function that renders the initial questions and answers
+function renderQuestions() {
+
+    questionEl.textContent = questions[questionIndex].question;
+
+        choiceA.textContent = questions[questionIndex].choices[0]
+        choiceB.textContent = questions[questionIndex].choices[1]
+        choiceC.textContent = questions[questionIndex].choices[2]
+        choiceD.textContent = questions[questionIndex].choices[3]
+};
+
+var answerCheck  = function(event) {
+    var selectedAnswer = event.target
+    if(questions[questionIndex].answer !== selectedAnswer.innerText) {
+        totalTime = totalTime - 5;
+    }
+
+    questionIndex++;
+    if(questionIndex < questions.length) {
+        renderQuestions();
+    } else {
+        GameOver();
+    }  
 }
 
 
+function GameOver() {
+    questionContainerEl.classList.remove('show');
+    questionContainerEl.classList.add('hide');
+    endGameContainer.classList.remove('hide');
+    endGameContainer.classList.add('show');
 
-// start game button
-StartGameButton.addEventListener('click', startQuiz)
+    endGameDisplayScore.textContent = totalTime;
+}
+ // displays highScore page and hides intro container
+function highScore() {
+    introContainer.classList.remove('show');
+    introContainer.classList.add('hide');
+    highScoreContainerEl.classList.remove('hide');
+    highScoreContainerEl.classList.add('show');
+}
+
+// start game button / event listeners
+StartGameButton.addEventListener('click', startQuiz);
+questionContainerEl.addEventListener('click',answerCheck)
+viewHighScoreEl.addEventListener('click', highScore)
