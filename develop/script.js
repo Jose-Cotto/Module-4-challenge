@@ -60,7 +60,7 @@ const questions = [
 ]
 //Gives the selection in the array a starting point of zero or the first question.
 let questionIndex = 0;
-var totalTime = 20;
+var totalTime = 30;
 var highScores = [];
 
 //Start quiz function
@@ -138,12 +138,11 @@ function goBack() {
 
 }
 
-function SubmitToHome() {
+function SubmitToHighScore() {
     endGameContainer.classList.remove('show');
     endGameContainer.classList.add('hide');
     highScoreContainerEl.classList.remove('hide');
     highScoreContainerEl.classList.add('show');
-    timerEl.textContent = 0;
 }
 
 function renderHighScoreList(event) {
@@ -163,9 +162,9 @@ function clearHighScores() {
     highScoreList.remove('li')
 }
 
-var clearScores = function() {
+var clearScores = function () {
     highScores = [];
-    while(highScoreList.firstChild) {
+    while (highScoreList.firstChild) {
         highScoreList.removeChild(highScoreList.firstChild);
     }
 
@@ -186,7 +185,7 @@ submitInitialsButton.addEventListener('click', function (event) {
     event.preventDefault();
 
     var initials = document.getElementById('initials').value;
-    var score = totalTime;
+    var score = totalTime + 1;
 
     if (initials === '') {
         alert('error,You must enter initials');
@@ -199,7 +198,7 @@ submitInitialsButton.addEventListener('click', function (event) {
     }
     localStorage.setItem('initials', initials)
     localStorage.setItem('score', score);
-    SubmitToHome();
+    SubmitToHighScore();
     highScores.push(highScore);
     highScores.sort((a, b) => { return b.score - a.score });
 
@@ -209,8 +208,9 @@ submitInitialsButton.addEventListener('click', function (event) {
         highScoreList.append(highScoresEl);
 
         initialsForm.reset();
+
     }
 })
 
-clearHighScoresButton.addEventListener('click',clearScores)
+clearHighScoresButton.addEventListener('click', clearScores)
 
