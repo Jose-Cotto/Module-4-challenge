@@ -34,3 +34,9 @@ header{
 li {
     list-style:none;
 }
+
+#view-high-score:hover {
+    cursor:pointer;
+    text-decoration: underline;
+    color:red;
+}

@@ -162,6 +162,15 @@ function renderHighScoreList(event) {
 function clearHighScores() {
     highScoreList.remove('li')
 }
+
+var clearScores = function() {
+    highScores = [];
+    while(highScoreList.firstChild) {
+        highScoreList.removeChild(highScoreList.firstChild);
+    }
+
+    localStorage.clear(highScore)
+}
 //event listeners
 
 //start game button
@@ -198,8 +207,10 @@ submitInitialsButton.addEventListener('click', function (event) {
         var highScoresEl = document.createElement('li');
         highScoresEl.innerHTML = highScores[i].initials + ' - ' + highScores[i].score;
         highScoreList.append(highScoresEl);
-        
+
         initialsForm.reset();
     }
 })
+
+clearHighScoresButton.addEventListener('click',clearScores)
 
