@@ -30,3 +30,27 @@ const highScoreContainerEl = document.getElementById('high-score-container');
 const highScoreList = document.getElementById('high-score-list');
 const highScoreGoBackButton = document.getElementById('go-back');
 const clearHighScoresButton = document.getElementById('clear-high-scores');
+
+// Array of all questions that will be rendered
+const questions = [
+    {
+        question:'When was JavaScript created?',
+        choices: ['A. 2001', 'B. 2009', 'C. It was always present', 'D. 1995'],
+        answer: 'D. 1995'
+    },
+    {
+        question:'Inside of which HTML element do we put the JavaScript link?',
+        choices: ['A. <js>', 'B. <javascript>', 'C. <scripting>', 'D. <script>'],
+        answer: 'D. <script>'
+    },
+    {
+        question:'Arrays in JavaScript can be used to store ______',
+        choices: ['A. strings', 'B. objects', 'C. arrays', 'D. All of the above'],
+        answer: 'D. All of the above'
+    },
+    {
+        question:'Commonly used data types do not include?',
+        choices: ['A. strings', 'B. booleans', 'C. alerts', 'D. numbers'],
+        answer: 'C. numbers'
+    }
+]
