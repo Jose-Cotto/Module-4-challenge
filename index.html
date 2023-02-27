@@ -12,23 +12,24 @@
     <title>Javascript | Quiz</title>
 </head>
 
-<body>
+<body class="wrong">
     <!-- header that includes view HS link and timer -->
     <header>
         <h3 id="view-high-score">View High scores</h3>
         <h3>Time:<span id="timer"></span></h3>
     </header>
-        <!-- Landing Page -->
+    <!-- Landing Page -->
     <section id="intro-container" class="show">
         <section class="content start">
             <h1>JavaScript Quiz</h1>
             <p>This timed multiple choice JavaScript quiz will test your knowledge on basic javascript concepts! Answer
-                all questions within the alloted time to save your score. wrong answers will result in a time deduction of 5 seconds.
+                all questions within the alloted time to save your score. wrong answers will result in a time deduction
+                of 5 seconds.
                 Your score will be calculated based on the time left at the point of completion, Good Luck! 😉 </p>
             <button id="start-quiz" class="start-btn">start Quiz</button>
         </section>
     </section>
-        <!-- Question page (container) -->
+    <!-- Question page (container) -->
     <section id="question-container" class="hide questions">
         <section class="content question">
             <h1 id="question"></h1>
@@ -40,7 +41,7 @@
             </div>
         </section>
     </section>
-        <!-- Game over page (container) -->
+    <!-- Game over page (container) -->
     <section id="end-game-container" class="hide">
         <section class="content end">
             <section>
@@ -52,10 +53,10 @@
             </form>
         </section>
     </section>
-        <!-- High score page (container) -->
+    <!-- High score page (container) -->
     <section id="high-score-container" class="hide">
         <section class="container high-scores">
-            <h1  class="high-score">Your High Scores</h1>
+            <h1 class="high-score">Your High Scores</h1>
             <ul id="high-score-list" class="score-list">
             </ul>
             <section>

@@ -90,12 +90,12 @@ function renderQuestions() {
 };
 
 var startTimer = function () {
-        totalTime = 30;
     var timeStart = setInterval(function () {
         timerEl.innerText = totalTime;
         totalTime--;
-        if (totalTime < 0 || questionIndex >= questions.length) {
+        if (totalTime < 0 || questionIndex === questions.length) {
             clearInterval(timeStart);
+            totalTime = 30;
             GameOver();
         }
     }, 1000);
