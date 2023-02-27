@@ -22,6 +22,8 @@ N/A
 
 To use this website you can read the directions then click the start button to start the quiz. Once the button is clicked you will be prompted to answer 4 multiple choice questions within 30 seconds of starting the game. Incorrect answers will result in a deduction of 5 seconds. At the end of the quiz you can save your score then view the historical high scores.
 
+Here is a link to the live site : https://jose-cotto.github.io/Module-4-challenge/
+
 ![screenshot of Javascript quiz](./develop/images/10.0.0.50_54416_index.html.png)
 
 ## Credits
